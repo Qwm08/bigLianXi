@@ -41,7 +41,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">提示框!!!!</h4>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
                 </div>
                 <div class="modal-body">
 
@@ -61,7 +61,6 @@
     <script>
 
         $(function () {
-
             $('.input_sub').on('click', function (e) {
                 //给登录按钮设置一个点击事件 ，要清除他的默认跳转
                 e.preventDefault();
@@ -72,9 +71,17 @@
 
                 //做非空判断,如果为空,提示; 如果不为空,则继续
                 if (userName == "" || password == "") {
-                    alert("账号或密码为空，请重新输入")
+                    //alert("账号或密码为空，请重新输入");
+                    //bootstarp的模态框提示
+                    $('.modal-body').text('账号或密码为空，请重新输入')
+                    $('#myModal').modal({
+
+                        //键盘上的esc键被按下时关闭模态框
+                        keyboard: true
+                    });
                     return;
                 }
+
                 //发送ajax请求
                 $.ajax({
                     type: 'post',
@@ -88,7 +95,15 @@
                         //通过返回的数据code来判断账号密码是否正确
                         if (backData.code !== 200) {
                             //当code不等200，则提示账号和密码错误
-                            alert('账号或密码错误，请重试');
+                            //alert('账号或密码错误，请重试');
+                            
+                            //bootstarp的模态框提示
+                            $('.modal-body').text('账号或密码错误，请重新输入')
+                            $('#myModal').modal({
+
+                                //键盘上的esc键被按下时关闭模态框
+                                keyboard: true
+                            });
                         } else {
                             window.location.href = 'index.html';
                         }
