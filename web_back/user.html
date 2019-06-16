@@ -67,6 +67,10 @@
 
     <script>
         $(function () {
+            //请求ajax
+            //1.进入个人中心
+            //2.调用获取用户详细信息接口
+            //3.得到数据之后，渲染到页面上
             $.ajax({
                 type: 'get',
                 url: 'http://localhost:8000/admin/userinfo_get',
@@ -80,7 +84,15 @@
                     $('img.user_pic').attr('src', backData.data.user_pic);
                 }
             });
-        })
+
+            //给图片预览设置改变事件
+           $('#exampleInputFile').on('change',function(){
+               //1.获取你选中的文件
+               var icon = this.files[0];
+           });
+
+
+        });
     </script>
 </body>
 
