@@ -63,7 +63,6 @@
             //给登录按钮一个点击事件,记得清楚他的默认跳转
             $('.input_sub').on('click', function (e) {
                 e.preventDefault();
-
                 //获取用户输入的账号和密码
                 var userName = $('.input_txt').val().trim();
                 var password = $('.input_pass').val().trim();
@@ -79,7 +78,7 @@
                 // 发ajax请求
                 $.ajax({
                     type: 'post',
-                    url: ' http://localhost:8000/admin/login',
+                    url: ' https://autumnfish.cn/big/admin/login',
                     data: {
                         user_name: userName,
                         password: password
