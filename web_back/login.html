@@ -60,45 +60,45 @@
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
     <script>
 
-       $(function(){
-        
-        $('.input_sub').on('click',function(e){
-             //给登录按钮设置一个点击事件 ，要清除他的默认跳转
-             e.preventDefault();
+        $(function () {
 
-            //获取用户输入的账号和密码
-            var userName = $('.input_txt').val().trim();
-            var password = $('.input_pass').val().trim();
-            
-            //做非空判断,如果为空,提示; 如果不为空,则继续
-            if(userName == "" || password == ""){
-                alert("账号或密码为空，请重新输入")
-                return;
-            } 
-            //发送ajax请求
-            $.ajax({
-                type:'post',
-                url:' https://autumnfish.cn/big/admin/login',
-                data:{
-                    user_name:userName,
-                    password:password
-                },
-                success:function(backData){
-                    //console.log(backData);
-                    //通过返回的数据code来判断账号密码是否正确
-                    if(backData.code !== 200){
-                        //当code不等200，则提示账号和密码错误
-                        alert('账号或密码错误，请重试');
-                    }else{
-                        window.location.href = 'index.html';
+            $('.input_sub').on('click', function (e) {
+                //给登录按钮设置一个点击事件 ，要清除他的默认跳转
+                e.preventDefault();
+
+                //获取用户输入的账号和密码
+                var userName = $('.input_txt').val().trim();
+                var password = $('.input_pass').val().trim();
+
+                //做非空判断,如果为空,提示; 如果不为空,则继续
+                if (userName == "" || password == "") {
+                    alert("账号或密码为空，请重新输入")
+                    return;
+                }
+                //发送ajax请求
+                $.ajax({
+                    type: 'post',
+                    url: ' https://autumnfish.cn/big/admin/login',
+                    data: {
+                        user_name: userName,
+                        password: password
+                    },
+                    success: function (backData) {
+                        //console.log(backData);
+                        //通过返回的数据code来判断账号密码是否正确
+                        if (backData.code !== 200) {
+                            //当code不等200，则提示账号和密码错误
+                            alert('账号或密码错误，请重试');
+                        } else {
+                            window.location.href = 'index.html';
+                        }
+
                     }
 
-                }
-                
-            })
-        });
-       })
-      
+                })
+            });
+        })
+
     </script>
 </body>
 
