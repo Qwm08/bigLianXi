@@ -89,8 +89,15 @@
            $('#exampleInputFile').on('change',function(){
                //1.获取你选中的文件
                var icon = this.files[0];
-           });
+               //files时一个dom的属性,只能用dom对象点出来
 
+               //生成一个url
+               var url = URL.createObjectURL(icon);
+               
+               //把这个url交给预览的img
+               $('.user_pic').attr('src',url);
+           });
+           
 
         });
     </script>
