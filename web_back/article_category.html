@@ -73,7 +73,7 @@
                 <tfoot>
                     <tr>
                         <td colspan="3" class="text-center">
-                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#addModal">新增分类</a>
+                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#addModal" id="addCategory">新增分类</a>
                         </td>
                     </tr>
                 </tfoot>
@@ -119,12 +119,7 @@
             $('#addModal').modal('hide');
         });
 
-        $('.category_table').delegate('a', 'click', function () {
-            if ($(this).hasClass('btn-info')) {
-                $('#addModal .modal-title').html('修改分类名称');
-                $('#addModal').modal('show');
-            }
-        })      
+
     </script>
 
 
@@ -134,7 +129,7 @@
                 <td>{{$value.name}}</td>
                 <td>{{$value.slug}}</td>
                 <td class="text-center">
-                    <a href="javascript:editTr({&quot;id&quot;:&quot;1&quot;,&quot;slug&quot;:&quot;uncategorized&quot;,&quot;name&quot;:&quot;未分类&quot;});"class="btn btn-info btn-xs">编辑</a>
+                    <a href="javascript:editTr({&quot;id&quot;:&quot;1&quot;,&quot;slug&quot;:&quot;uncategorized&quot;,&quot;name&quot;:&quot;未分类&quot;});"class="btn btn-info btn-xs btn-edit">编辑</a>
                     <a href="javascript:void(0);" data-id="{{$value.id}}" class="btn btn-danger btn-xs btn-delete">删除</a>
                 </td>
             </tr>
@@ -193,7 +188,21 @@
                 $('#addModal').modal('hide');
             });
 
+            //点击新增分类按钮
+            $('#addCategory').on('click',function(){
+                $('#addModal .modal-title').html('新增分类');
+                $('#model_add').text('新增').removeClass('btn-success');
+                
+            })
 
+            //编辑按钮,委托方式设置点击事件
+            $('tbody').on('click', 'a.btn-edit', function () {
+                //修改模态框中的按钮名字和模态框自己的标题
+                $('#addModal .modal-title').html('修改分类');
+                $('#model_add').text('保存').addClass('btn-success');
+                $('#addModal').modal('show');
+
+            });
 
             //删除文章类别  
             //步骤
