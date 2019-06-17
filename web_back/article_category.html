@@ -134,9 +134,8 @@
                 <td>{{$value.name}}</td>
                 <td>{{$value.slug}}</td>
                 <td class="text-center">
-                    <a href="javascript:editTr({&quot;id&quot;:&quot;1&quot;,&quot;slug&quot;:&quot;uncategorized&quot;,&quot;name&quot;:&quot;未分类&quot;});"
-                        class="btn btn-info btn-xs">编辑</a>
-                    <a href="javascript:deleteTr( {{$value.id}} );" class="btn btn-danger btn-xs">删除</a>
+                    <a href="javascript:editTr({&quot;id&quot;:&quot;1&quot;,&quot;slug&quot;:&quot;uncategorized&quot;,&quot;name&quot;:&quot;未分类&quot;});"class="btn btn-info btn-xs">编辑</a>
+                    <a href="javascript:void(0);" data-id="{{$value.id}}" class="btn btn-danger btn-xs btn-delete">删除</a>
                 </td>
             </tr>
             {{/each}}
@@ -151,20 +150,23 @@
             3.获取到数据渲染到页面
             4.结合模板引擎来渲染
              */
+            function getCategory() {
+                $.ajax({
+                    type: 'get',
+                    url: 'http://localhost:8000/admin/category_search',
+                    success: function (backData) {
+                        console.log(backData);
 
-            $.ajax({
-                type: 'get',
-                url: 'http://localhost:8000/admin/category_search',
-                success: function (backData) {
-                    console.log(backData);
+                        //调用模板方法
+                        var resHtml = template('tmp_cate', backData);
+                        $('tbody').html(resHtml);
 
-                    //调用模板方法
-                    var resHtml = template('tmp_cate', backData);
-                    $('tbody').html(resHtml);
+                    }
+                });
+            }
 
-                }
-            });
-
+            //页面一开始调用一下
+            getCategory();
 
 
             //点击新增分类模态框，获取用户输入的文字名字和类型发送ajax请求，添加一个文章分类
@@ -184,18 +186,7 @@
                     success: function (backData) {
                         console.log(backData);
                         //新增成功后。重新加载一次类别数据，渲染到页面
-                        $.ajax({
-                            type: 'get',
-                            url: 'http://localhost:8000/admin/category_search',
-                            success: function (backData) {
-                                console.log(backData);
-
-                                //调用模板方法
-                                var resHtml = template('tmp_cate', backData);
-                                $('tbody').html(resHtml);
-
-                            }
-                        });
+                        getCategory();
 
                     }
                 });
@@ -203,7 +194,39 @@
             });
 
 
-        })
+
+            //删除文章类别  
+            //步骤
+            //给删除按钮设置点击事件，因为这个a标签所在的tr是通过模板引擎动态生成
+            //所以使用事件委托的方式来注册
+            //发送ajax请求，删除对应的id数据
+            $('tbody').on('click', 'a.btn-delete', function () {
+                var that = $(this);//把当前这个点击的a标签给存起来
+
+                //获取这个a标签的自定义属性 data-id里面存放的值(就是你要删除的这一条数据的id)
+                var id = $(this).attr('data-id');
+                //console.log(id);
+                //发送ajax请求
+                $.ajax({
+                    type: 'post',
+                    url: 'http://localhost:8000/admin/category_delete',
+                    data: {
+                        id: id
+                    },
+                    success: function (backData) {
+                        console.log(backData);
+                        if (backData.code == 200) {
+                            //删除成功后，重新获取一次文字类别数据，重新渲染
+                            getCategory();
+                            that.parent().parent().remove();
+                        }
+
+                    }
+                });
+
+
+            });
+        });
     </script>
 </body>
 
