@@ -141,7 +141,7 @@
             //发送ajax请求
             $.ajax({
                 type:'post',
-                url:' https://autumnfish.cn/big/admin/logout',
+                url:'http://localhost:8000/admin/logout',
                 success:function(backData){
                     //console.log(backData);
                     //判断backData.code是否为200
@@ -160,7 +160,7 @@
         //一进入页面就使用本地接口，获取用户信息
         $.ajax({
             type:'get',
-            url:'http://localhost:8000/admin/getuser',
+            url:' https://autumnfish.cn/big/admin',
             success:function(backData){
                 //console.log(backData);
                 
